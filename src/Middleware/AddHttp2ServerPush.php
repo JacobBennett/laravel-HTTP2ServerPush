@@ -33,7 +33,6 @@ class AddHttp2ServerPush
             return $response;
         }
 
-        // use the crawler to fetch the nodes we want from the response
         $this->fetchLinkableNodes($response);
 
         return $response;
@@ -48,20 +47,11 @@ class AddHttp2ServerPush
     {
         $crawler = $this->getCrawler($response);
 
-        // look to see if link can have any type other than css or a font
-        // distinguish font vs css by looking at extension, css vs eot or svg etc...
-
-        // include images??
-
         $nodes = $crawler->filter('link, script[src]')->extract(['src', 'href']);
 
-        // this is giving me a listing of LOCAL urls for any links or scripts
-        // now I just need to determine which type, make sure you account for query strings on end
         $headers = collect($nodes)->flatten(1)
             ->filter()
-            ->reject(function ($url) {
-                return $this->isExternalUrl($url);
-            })->map(function ($url) {
+            ->map(function ($url) {
                 return $this->buildLinkHeaderString($url);
             })->filter()
             ->implode(',');
@@ -87,16 +77,6 @@ class AddHttp2ServerPush
         }
 
         return $this->crawler = new Crawler($response->getContent());
-    }
-
-    /**
-     * @param $url
-     * @return bool
-     */
-    private function isExternalUrl($url)
-    {
-        // is this a local fully qualified url
-        return str_contains($url, "//");
     }
 
     /**

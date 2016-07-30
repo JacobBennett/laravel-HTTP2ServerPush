@@ -80,18 +80,6 @@ class AddHttp2ServerPushTest extends \PHPUnit_Framework_TestCase
         $this->assertFalse($this->isServerPushResponse($response));
     }
 
-    /** @test */
-    public function it_will_not_return_a_push_header_for_external_resources()
-    {
-        // TODO: check that double slash isn't OUR sites url
-
-        $request = new Request();
-
-        $response = $this->middleware->handle($request, $this->getNext('pageWithExternalAssets'));
-
-        $this->assertFalse($this->isServerPushResponse($response));
-    }
-
     /**
      * @param string $pageName
      *
