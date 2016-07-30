@@ -4,7 +4,11 @@
 [![Software License](https://img.shields.io/badge/license-MIT-brightgreen.svg?style=flat-square)](LICENSE.md)
 [![Total Downloads](https://img.shields.io/packagist/dt/jacobbennett/laravel-http2serverpush.svg?style=flat-square)](https://packagist.org/packages/jacobbennett/laravel-http2serverpush)
 
-Something here explaining what ServerPush is
+> Server Push is a HTTP/2 concept which allows the server to speculatively start sending resources to the client. This can potentially speed up initial page load times: the browser doesn't have to parse the HTML page and find out which other resources to load, instead the server can start sending them immediately.
+> - [source](http://blog.xebia.com/http2-server-push/)
+
+This package aims to provide the _easiest_ experience for adding Server Push to your responses. 
+Simply route your requests through the middleware and it will automatically create and attach the `Link` headers necessary to implement Server Push for your **CSS** and **JS** assets.
 
 ## Installation
 
@@ -49,7 +53,7 @@ If you discover any security related issues, please email me@jakebennett.net ins
 - [Jacob Bennett](https://github.com/jacobbennett)
 - [All Contributors](../../contributors)
 
-Something here about spatie helping a ton with tests and what not
+Thanks to the [https://github.com/spatie/laravel-pjax](https://github.com/spatie/laravel-pjax) package for providing a great starting point for testing Middlewares.
 
 ## License
 
