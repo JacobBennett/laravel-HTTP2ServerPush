@@ -1,6 +1,6 @@
 ![](https://raw.githubusercontent.com/jacobbennett/laravel-http2serverpush/master/server-push.png)
 
-# A Server Push Middleware for Laravel 5
+# Server Push Middleware for Laravel 5
 
 [![Latest Version on Packagist](https://img.shields.io/packagist/v/jacobbennett/laravel-Http2ServerPush.svg?maxAge=2592000?style=flat-square)](https://packagist.org/packages/jacobbennett/laravel-http2serverpush)
 [![Travis](https://img.shields.io/travis/JacobBennett/laravel-HTTP2ServerPush.svg?maxAge=2592000?style=flat-square)](https://travis-ci.org/JacobBennett/laravel-HTTP2ServerPush)
