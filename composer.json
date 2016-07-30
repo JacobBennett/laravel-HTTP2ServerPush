@@ -1,0 +1,43 @@
+{
+    "name": "jacobbennett/laravel-http2serverpush",
+    "description": "A HTTP2 Server Push Middleware for Laravel 5",
+    "keywords": [
+        "laravel",
+        "laravel-http2serverpush",
+        "serverpush"
+    ],
+    "homepage": "https://github.com/jacobbennett/laravel-http2serverpush",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Jacob Bennett",
+            "email": "me@jakebennett.net",
+            "homepage": "https://jakebennett.net",
+            "role": "Developer"
+        }
+    ],
+    "require": {
+        "php" : "^5.5.0|^7.0",
+        "illuminate/support": "^5.1",
+        "illuminate/http": "^5.1",
+        "symfony/dom-crawler": "^2.7|^3.0",
+        "symfony/css-selector": "^2.7|^3.0"
+    },
+    "require-dev": {
+        "phpunit/phpunit" : "4.*",
+        "scrutinizer/ocular": "~1.1"
+    },
+    "autoload": {
+        "psr-4": {
+            "JacobBennett\\Http2ServerPush\\": "src"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "JacobBennett\\Http2ServerPush\\Test\\": "tests"
+        }
+    },
+    "scripts": {
+        "test": "phpunit"
+    }
+}
