@@ -33,10 +33,6 @@ protected $middleware = [
 When you route a request through the `AddHttp2ServerPush` middleware, the response is scanned for any `link` or `script` tags that could benefit from being loaded using Server Push. 
 These assets will be added to the `Link` header before sending the response to the client. Easy!
 
-## Change log
-
-Please see [CHANGELOG](CHANGELOG.md) for more information what has changed recently.
-
 ## Testing
 
 ``` bash
