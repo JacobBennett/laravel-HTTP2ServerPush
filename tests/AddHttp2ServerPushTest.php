@@ -15,7 +15,7 @@ class AddHttp2ServerPushTest extends \PHPUnit_Framework_TestCase
         $this->middleware = new AddHttp2ServerPush();
     }
 
-    /** @test */
+//    /** @test */
     public function it_will_not_modify_a_response_with_no_server_push_assets()
     {
         $request = new Request();
@@ -45,6 +45,16 @@ class AddHttp2ServerPushTest extends \PHPUnit_Framework_TestCase
 
         $this->assertTrue($this->isServerPushResponse($response));
         $this->assertStringEndsWith("as=script", $response->headers->get('link'));
+    }
+
+    /** @test */
+    public function it_returns_well_formatted_link_headers()
+    {
+        $request = new Request();
+
+        $response = $this->middleware->handle($request, $this->getNext('pageWithCss'));
+
+        $this->assertEquals("<css/test.css>; rel=preload; as=style", $response->headers->get('link'));
     }
 
     /** @test */
@@ -104,7 +114,7 @@ class AddHttp2ServerPushTest extends \PHPUnit_Framework_TestCase
      *
      * @return string
      */
-    protected function getHtml($pageName = 'pageWithTitle')
+    protected function getHtml($pageName)
     {
         return file_get_contents(__DIR__."/fixtures/{$pageName}.html");
     }
