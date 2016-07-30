@@ -1,6 +1,6 @@
 # A HTTP2 Server Push Middleware for Laravel 5
 
-[![Latest Version on Packagist][![Packagist](https://img.shields.io/packagist/v/jacobbennett/laravel-Http2ServerPush.svg?maxAge=2592000?style=flat-square)](https://packagist.org/packages/jacobbennett/laravel-http2serverpush)
+[![Latest Version on Packagist](https://img.shields.io/packagist/v/jacobbennett/laravel-Http2ServerPush.svg?maxAge=2592000?style=flat-square)](https://packagist.org/packages/jacobbennett/laravel-http2serverpush)
 [![Software License](https://img.shields.io/badge/license-MIT-brightgreen.svg?style=flat-square)](LICENSE.md)
 [![Total Downloads](https://img.shields.io/packagist/dt/jacobbennett/laravel-http2serverpush.svg?style=flat-square)](https://packagist.org/packages/jacobbennett/laravel-http2serverpush)
 
