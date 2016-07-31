@@ -29,7 +29,7 @@ class AddHttp2ServerPush
     {
         $response = $next($request);
 
-        if ($response->isRedirection()) {
+        if ($response->isRedirection() || !$response instanceof Response) {
             return $response;
         }
 
