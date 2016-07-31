@@ -76,9 +76,9 @@ class AddHttp2ServerPush
     }
 
     /**
-     * Get all nodes we are interested in pushing
+     * Get all nodes we are interested in pushing.
      *
-     * @param $response
+     * @param \Illuminate\Http\Response $response
      *
      * @return \Illuminate\Support\Collection
      */
@@ -90,9 +90,9 @@ class AddHttp2ServerPush
     }
 
     /**
-     * Build out header string based on asset extension
+     * Build out header string based on asset extension.
      *
-     * @param String $url
+     * @param string $url
      *
      * @return string
      */
@@ -120,7 +120,7 @@ class AddHttp2ServerPush
     /**
      * Add Link Header
      *
-     * @param Response $response
+     * @param \Illuminate\Http\Response $response
      *
      * @param $link
      */
