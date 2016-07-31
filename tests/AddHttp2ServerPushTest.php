@@ -10,12 +10,13 @@ use Symfony\Component\HttpFoundation\Response;
 
 class AddHttp2ServerPushTest extends \PHPUnit_Framework_TestCase
 {
+
     public function setUp()
     {
         $this->middleware = new AddHttp2ServerPush();
     }
 
-//    /** @test */
+    /** @test */
     public function it_will_not_modify_a_response_with_no_server_push_assets()
     {
         $request = new Request();
@@ -45,6 +46,18 @@ class AddHttp2ServerPushTest extends \PHPUnit_Framework_TestCase
 
         $this->assertTrue($this->isServerPushResponse($response));
         $this->assertStringEndsWith("as=script", $response->headers->get('link'));
+    }
+
+    /** @test */
+    public function it_will_return_a_image_link_header_for_images()
+    {
+        $request = new Request();
+
+        $response = $this->middleware->handle($request, $this->getNext('pageWithImages'));
+
+        $this->assertTrue($this->isServerPushResponse($response));
+        $this->assertStringEndsWith("as=image", $response->headers->get('link'));
+        $this->assertCount(6, explode(",", $response->headers));
     }
 
     /** @test */

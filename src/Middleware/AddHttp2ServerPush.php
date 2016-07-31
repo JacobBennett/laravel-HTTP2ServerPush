@@ -33,7 +33,7 @@ class AddHttp2ServerPush
             return $response;
         }
 
-        $this->fetchLinkableNodes($response);
+        $this->generateAndAttachLinkHeaders($response);
 
         return $response;
     }
@@ -43,20 +43,16 @@ class AddHttp2ServerPush
      *
      * @return $this
      */
-    protected function fetchLinkableNodes(Response $response)
+    protected function generateAndAttachLinkHeaders(Response $response)
     {
-        $crawler = $this->getCrawler($response);
-
-        $nodes = $crawler->filter('link, script[src]')->extract(['src', 'href']);
-
-        $headers = collect($nodes)->flatten(1)
-            ->filter()
+        $headers = $this->fetchLinkableNodes($response)
+            ->flatten(1)
             ->map(function ($url) {
                 return $this->buildLinkHeaderString($url);
             })->filter()
             ->implode(',');
 
-        if (! empty(trim($headers))) {
+        if (!empty(trim($headers))) {
             $this->addLinkHeader($response, $headers);
         }
 
@@ -80,18 +76,41 @@ class AddHttp2ServerPush
     }
 
     /**
+     * Get all nodes we are interested in pushing
+     *
+     * @param $response
+     *
+     * @return \Illuminate\Support\Collection
+     */
+    protected function fetchLinkableNodes($response)
+    {
+        $crawler = $this->getCrawler($response);
+
+        return collect($crawler->filter('link, script[src], img[src]')->extract(['src', 'href']));
+    }
+
+    /**
+     * Build out header string based on asset extension
+     *
      * @param String $url
+     *
      * @return string
      */
     private function buildLinkHeaderString($url)
     {
         $linkTypeMap = [
-            'css' => 'style',
-            'js'  => 'script',
+            '.CSS'  => 'style',
+            '.JS'   => 'script',
+            '.BMP'  => 'image',
+            '.GIF'  => 'image',
+            '.JPG'  => 'image',
+            '.JPEG' => 'image',
+            '.PNG'  => 'image',
+            '.TIFF' => 'image',
         ];
 
-        $type = collect($linkTypeMap)->first(function($extension) use($url) {
-           return  str_contains($url, $extension);
+        $type = collect($linkTypeMap)->first(function ($extension) use ($url) {
+            return str_contains(strtoupper($url), $extension);
         });
 
         return is_null($type) ? null : "<{$url}>; rel=preload; as={$type}";
@@ -99,7 +118,10 @@ class AddHttp2ServerPush
     }
 
     /**
+     * Add Link Header
+     *
      * @param Response $response
+     *
      * @param $link
      */
     private function addLinkHeader(Response $response, $link)
