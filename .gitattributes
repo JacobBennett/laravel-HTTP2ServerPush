@@ -8,3 +8,6 @@
 /phpunit.xml.dist   export-ignore
 /.scrutinizer.yml   export-ignore
 /tests              export-ignore
+/CONTRIBUTING.md    export-ignore
+/README.md          export-ignore
+/server-push.png    export-ignore
