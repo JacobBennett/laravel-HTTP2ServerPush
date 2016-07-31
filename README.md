@@ -10,7 +10,7 @@
 Server Push is a HTTP/2 concept which allows the server to speculatively start sending resources to the client. This can potentially speed up initial page load times: the browser doesn't have to parse the HTML page and find out which other resources to load, instead the server can start sending them immediately. [(source)](http://blog.xebia.com/http2-server-push/)
 
 This package aims to provide the _easiest_ experience for adding Server Push to your responses. 
-Simply route your requests through the `AddHttp2ServerPush` middleware and it will automatically create and attach the `Link` headers necessary to implement Server Push for your CSS and JS assets.
+Simply route your requests through the `AddHttp2ServerPush` middleware and it will automatically create and attach the `Link` headers necessary to implement Server Push for your CSS, JS and Image assets.
 
 ## Installation
 
@@ -32,8 +32,10 @@ protected $middleware = [
 
 ## Usage
 
-When you route a request through the `AddHttp2ServerPush` middleware, the response is scanned for any `link` or `script` tags that could benefit from being loaded using Server Push. 
+When you route a request through the `AddHttp2ServerPush` middleware, the response is scanned for any `link`, `script` or `img` tags that could benefit from being loaded using Server Push. 
 These assets will be added to the `Link` header before sending the response to the client. Easy!
+
+**Note:** To push an image asset, it must have one of the following extensions: `bmp`, `gif`, `jpg`, `jpeg`, `png` or `tiff`.
 
 ## Testing
 
