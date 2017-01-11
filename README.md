@@ -19,14 +19,18 @@ You can install the package via composer:
 $ composer require jacobbennett/laravel-http2serverpush
 ```
 
-Next you must add the `\JacobBennett\Http2ServerPush\Middleware\AddHttp2ServerPush`-middleware to the kernel.
+Next you must add the `\JacobBennett\Http2ServerPush\Middleware\AddHttp2ServerPush`-middleware to the kernel. Adding it to the web group is recommeneded as API's do not have assets to push.
 ```php
 // app/Http/Kernel.php
 
 ...
-protected $middleware = [
+protected $middlewareGroups = [
+    'web' => [
+        ...
+        \JacobBennett\Http2ServerPush\Middleware\AddHttp2ServerPush::class,
+        ...
+    ],
     ...
-    \JacobBennett\Http2ServerPush\Middleware\AddHttp2ServerPush::class,
 ];
 ```
 
