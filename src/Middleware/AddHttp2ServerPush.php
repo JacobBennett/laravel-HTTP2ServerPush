@@ -109,12 +109,18 @@ class AddHttp2ServerPush
             '.TIFF' => 'image',
         ];
 
-        $type = collect($linkTypeMap)->first(function ($extension) use ($url) {
-            return str_contains(strtoupper($url), $extension);
-        });
+        $swapParameterOrder = app()->version() <= 5.2;
+
+        $type = collect($linkTypeMap)
+            ->first(function ($type, $extension) use ($url, $swapParameterOrder) {
+                if ($swapParameterOrder) {
+                    list($extension, $type) = [$type, $extension];
+                }
+
+                return str_contains(strtoupper($url), $extension);
+            });
 
         return is_null($type) ? null : "<{$url}>; rel=preload; as={$type}";
-
     }
 
     /**
