@@ -49,7 +49,7 @@ class AddHttp2ServerPushTest extends \PHPUnit_Framework_TestCase
     }
 
     /** @test */
-    public function it_will_return_a_image_link_header_for_images()
+    public function it_will_return_an_image_link_header_for_images()
     {
         $request = new Request();
 
@@ -57,7 +57,7 @@ class AddHttp2ServerPushTest extends \PHPUnit_Framework_TestCase
 
         $this->assertTrue($this->isServerPushResponse($response));
         $this->assertStringEndsWith("as=image", $response->headers->get('link'));
-        $this->assertCount(6, explode(",", $response->headers));
+        $this->assertCount(6, explode(",", $response->headers->get('link')));
     }
 
     /** @test */
@@ -80,7 +80,7 @@ class AddHttp2ServerPushTest extends \PHPUnit_Framework_TestCase
         $this->assertTrue($this->isServerPushResponse($response));
         $this->assertTrue(str_contains($response->headers, 'style'));
         $this->assertTrue(str_contains($response->headers, 'script'));
-        $this->assertCount(2, explode(",", $response->headers));
+        $this->assertCount(2, explode(",", $response->headers->get('link')));
     }
 
     /** @test */

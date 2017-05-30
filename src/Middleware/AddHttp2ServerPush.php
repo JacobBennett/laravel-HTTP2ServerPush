@@ -109,7 +109,7 @@ class AddHttp2ServerPush
             '.TIFF' => 'image',
         ];
 
-        $type = collect($linkTypeMap)->first(function ($extension) use ($url) {
+        $type = collect($linkTypeMap)->first(function ($type, $extension) use ($url) {
             return str_contains(strtoupper($url), $extension);
         });
 
