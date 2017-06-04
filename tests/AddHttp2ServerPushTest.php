@@ -99,13 +99,12 @@ class AddHttp2ServerPushTest extends \PHPUnit_Framework_TestCase
         $request = new Request();
         $limit = 2;
 
-        $response = $this->middleware->handle($request, $this->getNext('pageWithJsInline'), $limit);
+        $response = $this->middleware->handle($request, $this->getNext('pageWithImages'), $limit);
 
         $count = preg_match_all('/(?:\<.*?\>\;\srel\=preload\;\sas\=[a-zA-Z]+\,?)/', $response->headers->get('link'));
 
         $this->assertEquals($limit, $count);
     }
-
 
     /**
      * @param string $pageName
