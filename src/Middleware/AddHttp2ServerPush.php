@@ -43,7 +43,7 @@ class AddHttp2ServerPush
      *
      * @return $this
      */
-    protected function generateAndAttachLinkHeaders(Response $response, int $limit = null)
+    protected function generateAndAttachLinkHeaders(Response $response, $limit = null)
     {
         $headers = $this->fetchLinkableNodes($response)
             ->flatten(1)
