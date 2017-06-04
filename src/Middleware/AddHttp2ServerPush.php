@@ -25,7 +25,7 @@ class AddHttp2ServerPush
      *
      * @return mixed
      */
-    public function handle(Request $request, Closure $next, int $limit = null)
+    public function handle(Request $request, Closure $next, $limit = null)
     {
         $response = $next($request);
 

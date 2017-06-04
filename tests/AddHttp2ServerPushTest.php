@@ -97,7 +97,7 @@ class AddHttp2ServerPushTest extends \PHPUnit_Framework_TestCase
     public function it_will_return_limit__count_of_links()
     {
         $request = new Request();
-        $limit = 20;
+        $limit = 2;
 
         $response = $this->middleware->handle($request, $this->getNext('pageWithJsInline'), $limit);
 
