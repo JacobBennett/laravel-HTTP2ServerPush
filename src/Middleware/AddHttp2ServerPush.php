@@ -25,15 +25,15 @@ class AddHttp2ServerPush
      *
      * @return mixed
      */
-    public function handle(Request $request, Closure $next)
+    public function handle(Request $request, Closure $next, int $limit = null)
     {
         $response = $next($request);
 
-        if ($response->isRedirection() || !$response instanceof Response) {
+        if ($response->isRedirection() || !$response instanceof Response || $request->isJson()) {
             return $response;
         }
 
-        $this->generateAndAttachLinkHeaders($response);
+        $this->generateAndAttachLinkHeaders($response, $limit);
 
         return $response;
     }
@@ -43,17 +43,20 @@ class AddHttp2ServerPush
      *
      * @return $this
      */
-    protected function generateAndAttachLinkHeaders(Response $response)
+    protected function generateAndAttachLinkHeaders(Response $response, int $limit = null)
     {
         $headers = $this->fetchLinkableNodes($response)
             ->flatten(1)
             ->map(function ($url) {
                 return $this->buildLinkHeaderString($url);
-            })->filter()
-            ->implode(',');
+            })->filter();
 
-        if (!empty(trim($headers))) {
-            $this->addLinkHeader($response, $headers);
+        if($limit) $headers = $headers->take($limit);
+
+        $directives = $headers->implode(',');
+
+        if (!empty(trim($directives))) {
+            $this->addLinkHeader($response, $directives);
         }
 
         return $this;
@@ -109,7 +112,7 @@ class AddHttp2ServerPush
             '.TIFF' => 'image',
         ];
 
-        $type = collect($linkTypeMap)->first(function ($extension) use ($url) {
+        $type = collect($linkTypeMap)->first(function ($type, $extension) use ($url) {
             return str_contains(strtoupper($url), $extension);
         });
 
