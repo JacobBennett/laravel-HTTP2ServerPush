@@ -49,14 +49,13 @@ class AddHttp2ServerPush
             ->flatten(1)
             ->map(function ($url) {
                 return $this->buildLinkHeaderString($url);
-            })->filter();
+            })
+            ->filter()
+            ->take($limit)
+            ->implode(',');
 
-        if($limit) $headers = $headers->take($limit);
-
-        $directives = $headers->implode(',');
-
-        if (!empty(trim($directives))) {
-            $this->addLinkHeader($response, $directives);
+        if (!empty(trim($headers))) {
+            $this->addLinkHeader($response, $headers);
         }
 
         return $this;
