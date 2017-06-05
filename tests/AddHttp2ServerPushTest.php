@@ -94,7 +94,7 @@ class AddHttp2ServerPushTest extends \PHPUnit_Framework_TestCase
     }
 
     /** @test */
-    public function it_will_return_limit__count_of_links()
+    public function it_will_return_limit_count_of_links()
     {
         $request = new Request();
         $limit = 2;
