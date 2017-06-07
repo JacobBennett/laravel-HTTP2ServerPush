@@ -101,9 +101,7 @@ class AddHttp2ServerPushTest extends \PHPUnit_Framework_TestCase
 
         $response = $this->middleware->handle($request, $this->getNext('pageWithImages'), $limit);
 
-        $count = preg_match_all('/(?:\<.*?\>\;\srel\=preload\;\sas\=[a-zA-Z]+\,?)/', $response->headers->get('link'));
-
-        $this->assertEquals($limit, $count);
+        $this->assertCount($limit, explode(",", $response->headers->get('link')));
     }
 
     /**
