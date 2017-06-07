@@ -25,7 +25,7 @@ class AddHttp2ServerPush
      *
      * @return mixed
      */
-    public function handle(Request $request, Closure $next)
+    public function handle(Request $request, Closure $next, $limit = null)
     {
         $response = $next($request);
 
@@ -33,7 +33,7 @@ class AddHttp2ServerPush
             return $response;
         }
 
-        $this->generateAndAttachLinkHeaders($response);
+        $this->generateAndAttachLinkHeaders($response, $limit);
 
         return $response;
     }
@@ -43,13 +43,15 @@ class AddHttp2ServerPush
      *
      * @return $this
      */
-    protected function generateAndAttachLinkHeaders(Response $response)
+    protected function generateAndAttachLinkHeaders(Response $response, $limit = null)
     {
         $headers = $this->fetchLinkableNodes($response)
             ->flatten(1)
             ->map(function ($url) {
                 return $this->buildLinkHeaderString($url);
-            })->filter()
+            })
+            ->filter()
+            ->take($limit)
             ->implode(',');
 
         if (!empty(trim($headers))) {
