@@ -104,6 +104,24 @@ class AddHttp2ServerPushTest extends \PHPUnit_Framework_TestCase
         $this->assertCount($limit, explode(",", $response->headers->get('link')));
     }
 
+    /** @test */
+    public function it_will_append_to_header_if_already_present()
+    {
+        $request = new Request();
+
+        $next = $this->getNext('pageWithCss');
+
+        $response = $this->middleware->handle($request, function ($request) use ($next) {
+            $response = $next($request);
+            $response->headers->set('Link', '<https://example.com/en>; rel="alternate"; hreflang="en"');
+            return $response;
+        });
+
+        $this->assertTrue($this->isServerPushResponse($response));
+        $this->assertStringStartsWith('<https://example.com/en>; rel="alternate"; hreflang="en",', $response->headers->get('link'));
+        $this->assertStringEndsWith("as=style", $response->headers->get('link'));
+    }
+
     /**
      * @param string $pageName
      *
@@ -116,7 +134,6 @@ class AddHttp2ServerPushTest extends \PHPUnit_Framework_TestCase
         $response = (new \Illuminate\Http\Response($html));
 
         return function ($request) use ($response) {
-
             return $response;
         };
     }
