@@ -9,7 +9,6 @@ use Symfony\Component\DomCrawler\Crawler;
 
 class AddHttp2ServerPush
 {
-
     /**
      * The DomCrawler instance.
      *
@@ -116,7 +115,6 @@ class AddHttp2ServerPush
         });
 
         return is_null($type) ? null : "<{$url}>; rel=preload; as={$type}";
-
     }
 
     /**
@@ -128,7 +126,10 @@ class AddHttp2ServerPush
      */
     private function addLinkHeader(Response $response, $link)
     {
+        if ($response->headers->get('Link')) {
+            $link = $response->headers->get('Link') . ',' . $link;
+        }
+
         $response->header('Link', $link);
     }
-
 }
