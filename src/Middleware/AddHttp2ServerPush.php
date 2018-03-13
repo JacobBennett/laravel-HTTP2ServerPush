@@ -28,7 +28,7 @@ class AddHttp2ServerPush
     {
         $response = $next($request);
 
-        if ($response->isRedirection() || !$response instanceof Response || $request->isJson()) {
+        if ($response->isRedirection() || !$response instanceof Response || $request->isJson() || explode('/', $request->server('SERVER_PROTOCOL'))['1'] < 2) {
             return $response;
         }
 
@@ -45,11 +45,9 @@ class AddHttp2ServerPush
     protected function generateAndAttachLinkHeaders(Response $response, $limit = null)
     {
         $headers = $this->fetchLinkableNodes($response)
-            ->flatten(1)
             ->map(function ($url) {
                 return $this->buildLinkHeaderString($url);
             })
-            ->filter()
             ->take($limit)
             ->implode(',');
 
@@ -87,7 +85,8 @@ class AddHttp2ServerPush
     {
         $crawler = $this->getCrawler($response);
 
-        return collect($crawler->filter('link, script[src], img[src]')->extract(['src', 'href']));
+        $links = collect($crawler->filter('link, script[src], img[src]')->extract(['src', 'href']));
+        return $links->flatten(1)->filter()->unique();
     }
 
     /**
