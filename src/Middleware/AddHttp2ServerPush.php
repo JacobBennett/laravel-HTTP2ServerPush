@@ -107,6 +107,7 @@ class AddHttp2ServerPush
             '.JPG'  => 'image',
             '.JPEG' => 'image',
             '.PNG'  => 'image',
+            '.SVG'  => 'image',
             '.TIFF' => 'image',
         ];
 
