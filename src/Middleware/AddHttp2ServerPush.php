@@ -50,6 +50,7 @@ class AddHttp2ServerPush
                 return $this->buildLinkHeaderString($url);
             })
             ->filter()
+            ->unique()
             ->take($limit)
             ->implode(',');
 
