@@ -104,6 +104,16 @@ class AddHttp2ServerPushTest extends \PHPUnit_Framework_TestCase
     }
 
     /** @test */
+    public function it_will_not_return_a_push_header_for_icons()
+    {
+        $request = new Request();
+
+        $response = $this->middleware->handle($request, $this->getNext('pageWithFavicon'));
+
+        $this->assertFalse($this->isServerPushResponse($response));
+    }
+
+    /** @test */
     public function it_will_return_limit_count_of_links()
     {
         $request = new Request();
