@@ -2,8 +2,6 @@
 
 namespace JacobBennett\Http2ServerPush\Test;
 
-// TODO: test for invalid file types like .svg
-
 use Illuminate\Http\Request;
 use JacobBennett\Http2ServerPush\Middleware\AddHttp2ServerPush;
 use Symfony\Component\HttpFoundation\Response;
@@ -57,7 +55,19 @@ class AddHttp2ServerPushTest extends \PHPUnit_Framework_TestCase
 
         $this->assertTrue($this->isServerPushResponse($response));
         $this->assertStringEndsWith("as=image", $response->headers->get('link'));
-        $this->assertCount(6, explode(",", $response->headers->get('link')));
+        $this->assertCount(7, explode(",", $response->headers->get('link')));
+    }
+
+    /** @test */
+    public function it_will_return_an_image_link_header_for_svg_objects()
+    {
+        $request = new Request();
+
+        $response = $this->middleware->handle($request, $this->getNext('pageWithSVGObject'));
+
+        $this->assertTrue($this->isServerPushResponse($response));
+        $this->assertStringEndsWith("as=image", $response->headers->get('link'));
+        $this->assertCount(1, explode(",", $response->headers->get('link')));
     }
 
     /** @test */
@@ -89,6 +99,16 @@ class AddHttp2ServerPushTest extends \PHPUnit_Framework_TestCase
         $request = new Request();
 
         $response = $this->middleware->handle($request, $this->getNext('pageWithJsInline'));
+
+        $this->assertFalse($this->isServerPushResponse($response));
+    }
+
+    /** @test */
+    public function it_will_not_return_a_push_header_for_icons()
+    {
+        $request = new Request();
+
+        $response = $this->middleware->handle($request, $this->getNext('pageWithFavicon'));
 
         $this->assertFalse($this->isServerPushResponse($response));
     }
