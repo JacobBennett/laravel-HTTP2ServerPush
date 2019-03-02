@@ -88,7 +88,7 @@ class AddHttp2ServerPush
     {
         $crawler = $this->getCrawler($response);
 
-        return collect($crawler->filter('link, script[src], img[src]')->extract(['src', 'href']));
+        return collect($crawler->filter('link:not([rel*="icon"]), script[src], img[src], object[data]')->extract(['src', 'href', 'data']));
     }
 
     /**
@@ -108,6 +108,7 @@ class AddHttp2ServerPush
             '.JPG'  => 'image',
             '.JPEG' => 'image',
             '.PNG'  => 'image',
+            '.SVG'  => 'image',
             '.TIFF' => 'image',
         ];
 
