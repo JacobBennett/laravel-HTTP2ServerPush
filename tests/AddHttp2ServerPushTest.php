@@ -14,6 +14,32 @@ class AddHttp2ServerPushTest extends \PHPUnit_Framework_TestCase
         $this->middleware = new AddHttp2ServerPush();
     }
 
+    
+    /** @test */
+    public function it_will_not_exceed_size_limit()
+    {
+        $request = new Request();
+
+        $limit = 50;
+        $response = $this->middleware->handle($request, $this->getNext('pageWithCssAndJs'), null, $limit, []);
+
+        $this->assertTrue($this->isServerPushResponse($response));
+        $this->assertTrue(strlen($response->headers->get('link')) <= $limit );
+        $this->assertCount(1, explode(",", $response->headers->get('link')));
+    }
+    
+    /** @test */
+    public function it_will_not_add_excluded_asset()
+    {
+        $request = new Request();
+
+        $response = $this->middleware->handle($request, $this->getNext('pageWithCssAndJs'), null, null, ['thing']);
+
+        $this->assertTrue($this->isServerPushResponse($response));
+        $this->assertTrue(!str_contains($response->headers, 'thing'));
+        $this->assertCount(1, explode(",", $response->headers->get('link')));
+    }
+    
     /** @test */
     public function it_will_not_modify_a_response_with_no_server_push_assets()
     {
@@ -77,7 +103,7 @@ class AddHttp2ServerPushTest extends \PHPUnit_Framework_TestCase
 
         $response = $this->middleware->handle($request, $this->getNext('pageWithCss'));
 
-        $this->assertEquals("<css/test.css>; rel=preload; as=style", $response->headers->get('link'));
+        $this->assertEquals("</css/test.css>; rel=preload; as=style", $response->headers->get('link'));
     }
 
     /** @test */

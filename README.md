@@ -34,6 +34,13 @@ protected $middlewareGroups = [
 ];
 ```
 
+## Publish config
+
+```php
+php artisan vendor:publish --provider="JacobBennett\Http2ServerPush\ServiceProvider"
+```
+
+
 ## Usage
 
 When you route a request through the `AddHttp2ServerPush` middleware, the response is scanned for any `link`, `script` or `img` tags that could benefit from being loaded using Server Push. 
