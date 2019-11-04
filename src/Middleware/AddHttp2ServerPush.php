@@ -51,7 +51,7 @@ class AddHttp2ServerPush
      */
     protected function generateAndAttachLinkHeaders(Response $response, $limit = null, $sizeLimit = null, $excludeKeywords=null)
     {
-        $excludeKeywords ?? $this->getConfig('exclude_keywords', []);
+        $excludeKeywords = $excludeKeywords ?? $this->getConfig('exclude_keywords', []);
         $headers = $this->fetchLinkableNodes($response)
             ->flatten(1)
             ->map(function ($url) {
