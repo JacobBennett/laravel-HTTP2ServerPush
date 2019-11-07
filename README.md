@@ -46,7 +46,7 @@ php artisan vendor:publish --provider="JacobBennett\Http2ServerPush\ServiceProvi
 When you route a request through the `AddHttp2ServerPush` middleware, the response is scanned for any `link`, `script` or `img` tags that could benefit from being loaded using Server Push. 
 These assets will be added to the `Link` header before sending the response to the client. Easy!
 
-**Note:** To push an image asset, it must have one of the following extensions: `bmp`, `gif`, `jpg`, `jpeg`, `png` or `tiff`.
+**Note:** To push an image asset, it must have one of the following extensions: `bmp`, `gif`, `jpg`, `jpeg`, `png`, `tiff` or `svg`.
 
 ## Testing
 
