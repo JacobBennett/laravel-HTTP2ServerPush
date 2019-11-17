@@ -3,6 +3,7 @@
 namespace JacobBennett\Http2ServerPush\Test;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Str;
 use JacobBennett\Http2ServerPush\Middleware\AddHttp2ServerPush;
 use Symfony\Component\HttpFoundation\Response;
 
@@ -14,7 +15,7 @@ class AddHttp2ServerPushTest extends \PHPUnit_Framework_TestCase
         $this->middleware = new AddHttp2ServerPush();
     }
 
-    
+
     /** @test */
     public function it_will_not_exceed_size_limit()
     {
@@ -27,7 +28,7 @@ class AddHttp2ServerPushTest extends \PHPUnit_Framework_TestCase
         $this->assertTrue(strlen($response->headers->get('link')) <= $limit );
         $this->assertCount(1, explode(",", $response->headers->get('link')));
     }
-    
+
     /** @test */
     public function it_will_not_add_excluded_asset()
     {
@@ -36,10 +37,10 @@ class AddHttp2ServerPushTest extends \PHPUnit_Framework_TestCase
         $response = $this->middleware->handle($request, $this->getNext('pageWithCssAndJs'), null, null, ['thing']);
 
         $this->assertTrue($this->isServerPushResponse($response));
-        $this->assertTrue(!str_contains($response->headers, 'thing'));
+        $this->assertTrue(!Str::contains($response->headers, 'thing'));
         $this->assertCount(1, explode(",", $response->headers->get('link')));
     }
-    
+
     /** @test */
     public function it_will_not_modify_a_response_with_no_server_push_assets()
     {
@@ -114,8 +115,8 @@ class AddHttp2ServerPushTest extends \PHPUnit_Framework_TestCase
         $response = $this->middleware->handle($request, $this->getNext('pageWithCssAndJs'));
 
         $this->assertTrue($this->isServerPushResponse($response));
-        $this->assertTrue(str_contains($response->headers, 'style'));
-        $this->assertTrue(str_contains($response->headers, 'script'));
+        $this->assertTrue(Str::contains($response->headers, 'style'));
+        $this->assertTrue(Str::contains($response->headers, 'script'));
         $this->assertCount(2, explode(",", $response->headers->get('link')));
     }
 
