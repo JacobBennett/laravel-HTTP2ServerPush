@@ -3,6 +3,7 @@
 namespace JacobBennett\Http2ServerPush\Middleware;
 
 use Closure;
+use Illuminate\Support\Str;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Symfony\Component\DomCrawler\Crawler;
@@ -43,7 +44,7 @@ class AddHttp2ServerPush
         }
         return config('http2serverpush.'.$key, $default);
     }
-    
+
     /**
      * @param \Illuminate\Http\Response $response
      *
@@ -69,7 +70,7 @@ class AddHttp2ServerPush
                 return !preg_match('%('.$exclude_keywords->implode('|').')%i', $value);
             })
             ->take($limit);
-            
+
         $sizeLimit = $sizeLimit ?? max(1, intval($this->getConfig('size_limit', 32*1024)));
         $headersText = trim($headers->implode(','));
         while(strlen($headersText) > $sizeLimit) {
@@ -136,10 +137,10 @@ class AddHttp2ServerPush
         ];
 
         $type = collect($linkTypeMap)->first(function ($type, $extension) use ($url) {
-            return str_contains(strtoupper($url), $extension);
+            return Str::contains(strtoupper($url), $extension);
         });
-        
-        
+
+
         if(!preg_match('%^https?://%i', $url)) {
             $basePath = $this->getConfig('base_path', '/');
             $url = $basePath . ltrim($url, $basePath);
