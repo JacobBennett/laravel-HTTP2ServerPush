@@ -12,6 +12,11 @@ Server Push is a HTTP/2 concept which allows the server to speculatively start s
 This package aims to provide the _easiest_ experience for adding Server Push to your responses. 
 Simply route your requests through the `AddHttp2ServerPush` middleware and it will automatically create and attach the `Link` headers necessary to implement Server Push for your CSS, JS and Image assets.
 
+## Requirements
+
+- Laravel 5
+- PHP 7
+
 ## Installation
 
 You can install the package via composer:
