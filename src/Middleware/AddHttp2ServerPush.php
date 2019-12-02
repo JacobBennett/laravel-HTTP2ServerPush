@@ -141,7 +141,7 @@ class AddHttp2ServerPush
         });
 
 
-        if(!preg_match('%^https?://%i', $url)) {
+        if(!preg_match('%^(https?:)?//%i', $url)) {
             $basePath = $this->getConfig('base_path', '/');
             $url = $basePath . ltrim($url, $basePath);
         }
