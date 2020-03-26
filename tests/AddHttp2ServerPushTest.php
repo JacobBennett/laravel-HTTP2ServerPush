@@ -6,11 +6,12 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Str;
 use JacobBennett\Http2ServerPush\Middleware\AddHttp2ServerPush;
 use Symfony\Component\HttpFoundation\Response;
+use PHPUnit\Framework\TestCase;
 
-class AddHttp2ServerPushTest extends \PHPUnit_Framework_TestCase
+class AddHttp2ServerPushTest extends TestCase
 {
 
-    public function setUp()
+    public function setUp() : void
     {
         $this->middleware = new AddHttp2ServerPush();
     }
