@@ -99,6 +99,18 @@ class AddHttp2ServerPushTest extends TestCase
     }
 
     /** @test */
+    public function it_will_return_a_fetch_link_header_for_fetch()
+    {
+        $request = new Request();
+
+        $response = $this->middleware->handle($request, $this->getNext('pageWithFetchPreload'));
+
+        $this->assertTrue($this->isServerPushResponse($response));
+        $this->assertStringContainsString('</api/resource>; rel=preload', $response->headers->get('link'));
+        $this->assertStringEndsWith("as=script", $response->headers->get('link'));
+    }
+
+    /** @test */
     public function it_returns_well_formatted_link_headers()
     {
         $request = new Request();
