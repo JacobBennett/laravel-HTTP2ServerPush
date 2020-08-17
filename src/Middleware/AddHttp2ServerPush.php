@@ -140,6 +140,9 @@ class AddHttp2ServerPush
             return Str::contains(strtoupper($url), $extension);
         });
 
+        if ($url && !$type) {
+            $type = 'fetch';
+        }
 
         if(!preg_match('%^(https?:)?//%i', $url)) {
             $basePath = $this->getConfig('base_path', '/');
