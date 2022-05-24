@@ -126,15 +126,17 @@ class AddHttp2ServerPush
     private function buildLinkHeaderString($url)
     {
         $linkTypeMap = [
-            '.CSS'  => 'style',
-            '.JS'   => 'script',
-            '.BMP'  => 'image',
-            '.GIF'  => 'image',
-            '.JPG'  => 'image',
-            '.JPEG' => 'image',
-            '.PNG'  => 'image',
-            '.SVG'  => 'image',
-            '.TIFF' => 'image',
+            '.CSS'   => 'style',
+            '.JS'    => 'script',
+            '.BMP'   => 'image',
+            '.GIF'   => 'image',
+            '.JPG'   => 'image',
+            '.JPEG'  => 'image',
+            '.PNG'   => 'image',
+            '.SVG'   => 'image',
+            '.TIFF'  => 'image',
+            '.WOFF'  => 'font',
+            '.WOFF2' => 'font',
         ];
 
         $type = collect($linkTypeMap)->first(function ($type, $extension) use ($url) {
