@@ -69,7 +69,8 @@ class AddHttp2ServerPush
                 }
                 return !preg_match('%('.$exclude_keywords->implode('|').')%i', $value);
             })
-            ->take($limit);
+            ->take($limit)
+            ->merge($this->getConfig('default_headers', []));
 
         $sizeLimit = $sizeLimit ?? max(1, intval($this->getConfig('size_limit', 32*1024)));
         $headersText = trim($headers->implode(','));
