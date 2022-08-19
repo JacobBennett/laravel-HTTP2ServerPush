@@ -113,7 +113,7 @@ class AddHttp2ServerPush
     {
         $crawler = $this->getCrawler($response);
 
-        return collect($crawler->filter('link:not([rel*="icon"]), script[src], img[src]:not([loading="lazy"]), object[data]')->extract(['src', 'href', 'data']));
+        return collect($crawler->filter('link:not([rel*="icon"]):not([rel="preconnect"]), script[src], img[src]:not([loading="lazy"]), object[data]')->extract(['src', 'href', 'data']));
     }
 
     /**
