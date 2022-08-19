@@ -135,6 +135,7 @@ class AddHttp2ServerPush
             '.PNG'   => 'image',
             '.SVG'   => 'image',
             '.TIFF'  => 'image',
+            '.WEBP'  => 'image',
             '.WOFF'  => 'font',
             '.WOFF2' => 'font',
         ];
