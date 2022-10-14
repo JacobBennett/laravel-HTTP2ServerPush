@@ -153,7 +153,7 @@ class AddHttp2ServerPush
             $url = $basePath . ltrim($url, $basePath);
         }
 
-        return is_null($type) ? null : "<{$url}>; rel=preload; as={$type}";
+        return is_null($type) ? null : "<{$url}>; rel=preload; as={$type}" . ($type == 'font' ? '; crossorigin' : '');
     }
 
     /**
