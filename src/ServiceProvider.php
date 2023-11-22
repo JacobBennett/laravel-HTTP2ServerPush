@@ -1,4 +1,4 @@
-<?php 
+<?php
 
 namespace JacobBennett\Http2ServerPush;
 use Illuminate\Foundation\AliasLoader;
@@ -13,10 +13,12 @@ class ServiceProvider extends LaravelServiceProvider
 	 */
 	public function boot()
 	{
-		// Register paths to be published by 'vendor:publish' Artisan command
-		$this->publishes([
-			__DIR__ . '/config.php' => config_path('http2serverpush.php'),
-		]);
+        $this->mergeConfigFrom(__DIR__.'/config.php', 'http2serverpush');
+
+        // Register paths to be published by 'vendor:publish' Artisan command
+        $this->publishes([
+            __DIR__ . '/config.php' => config_path('http2serverpush.php'),
+        ], 'config');
 	}
 
 }
